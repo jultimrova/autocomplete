@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import './App.css';
 
 const AutoComplete = () => {
     const [display, setDisplay] = useState(false);
     const [data, setData] = useState([]);
     const [search, setSearch] = useState('');
+    const wrapperRef = useRef(null);
 
     useEffect(() => {
         const pokemon = [];
@@ -21,6 +22,20 @@ const AutoComplete = () => {
         setData(pokemon);
     }, []);
 
+    useEffect(() => {
+        window.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            window.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    const handleClickOutside = event => {
+        const {current: wrap} = wrapperRef;
+        if (wrap && !wrap.contains(event.target)) {
+            setDisplay(false);
+        }
+    };
+
     const setPokemonSearch = (poke) => {
         setSearch(poke);
         setDisplay(false);
@@ -35,7 +50,7 @@ const AutoComplete = () => {
     }
 
     return (
-        <div className='lex-container flex-column pos-rel'>
+        <div ref={wrapperRef} className='lex-container flex-column pos-rel'>
             <input id='auto'
                    placeholder='Type something to search'
                    value={search}
@@ -50,6 +65,7 @@ const AutoComplete = () => {
                             return (
                                 <div className='data'
                                      key={id}
+                                     tabIndex='0'
                                      onClick={() => setPokemonSearch(value.name)}
                                 >
                                     <span>{value.name}</span>
