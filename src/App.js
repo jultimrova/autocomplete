@@ -21,6 +21,14 @@ const AutoComplete = () => {
         setData(pokemon);
     }, []);
 
+    const setPokemonSearch = (poke) => {
+        setSearch(poke);
+        setDisplay(false);
+    }
+
+    const onChangeSearch = event => {
+        setSearch(event.target.value)
+    }
 
     const onClickDisplay = () => {
         setDisplay(!display);
@@ -30,13 +38,20 @@ const AutoComplete = () => {
         <div className='lex-container flex-column pos-rel'>
             <input id='auto'
                    placeholder='Type something to search'
+                   value={search}
                    onClick={onClickDisplay}
+                   onChange={onChangeSearch}
             />
             {display && (
                 <div className='autocompleteContainer'>
-                    {data.map((value, id) => {
+                    {data
+                        .filter(({name}) => name.indexOf(search.toLowerCase()) > -1)
+                        .map((value, id) => {
                             return (
-                                <div className='data' key={id}>
+                                <div className='data'
+                                     key={id}
+                                     onClick={() => setPokemonSearch(value.name)}
+                                >
                                     <span>{value.name}</span>
                                     <img src={value.sprite} alt="pokemon"/>
                                 </div>
