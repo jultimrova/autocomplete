@@ -28,3 +28,40 @@ input {
     font-size: 18px;
     text-transform: capitalize;
 }
+.pos-rel {
+    position: relative;
+}
+
+.flex-container {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.autocompleteContainer {
+    position: absolute;
+    border-width: 0px 1px 1px 1px;
+    border-style: solid;
+    border-radius: 10px;
+    border-color: navy;
+    background-color: snow;
+    right: 10px;
+    top: 52px;
+    width: 520px;
+    cursor: pointer;
+}
+
+.data {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 500px;
+    padding: 5px;
+}
+
+.data span {
+    font-size: 25px;
+    text-transform: capitalize;
+}
